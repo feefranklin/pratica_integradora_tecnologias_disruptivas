@@ -14,7 +14,10 @@ import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Modal from '@mui/material/Modal';
-
+import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import HourglassTopIcon from '@mui/icons-material/HourglassTop';
+import ErrorIcon from '@mui/icons-material/Error';
 import CriarTarefa from './CriarTarefa';
 import EditarTarefa from './EditarTarefa';
 
@@ -40,6 +43,19 @@ const initialRows = [
   createData(5, 'Tarefa 5', 'Descrição da Tarefa 5', '2022-01-06', '2022-01-07', 'Em Andamento', 'Recurso 5'),
   createData(6, 'Tarefa 6', 'Descrição da Tarefa 6', '2022-01-07', '2022-01-08', 'Aguardando', 'Recurso 6'),
 ];
+
+const getStatusIcon = (status) => {
+  switch (status) {
+    case 'Concluída':
+      return <CheckCircleIcon color="success" />;
+    case 'Em Andamento':
+      return <HourglassEmptyIcon color="warning" />;
+    case 'Aguardando':
+      return <HourglassTopIcon color="info" />;
+    default:
+      return <ErrorIcon color="error" />;
+  }
+};
 
 //Componente ListarTarefa
 const ListarTarefa = () => {
@@ -119,10 +135,10 @@ const ListarTarefa = () => {
                       <TableCell align="right">{row.descricaoTarefa}</TableCell>
                       <TableCell align="right">{row.inicioTarefa}</TableCell>
                       <TableCell align="right">{row.fimTarefa}</TableCell>
-                      <TableCell align="right">{row.statusTarefa}</TableCell>
+                      <TableCell align="right">{getStatusIcon(row.statusTarefa)}</TableCell>
                       <TableCell align="right">{row.recursoTarefa}</TableCell>
                       <TableCell align="center">
-                        <Button variant="contained" color="success" onClick={() => handleEditar(row.idTarefa)}><EditIcon fontSize="small" /></Button>            
+                        <Button variant="contained" color="secondary" onClick={() => handleEditar(row.idTarefa)}><EditIcon fontSize="small" /></Button>            
                       </TableCell>
                       <TableCell align="center">
                         <Button variant="contained" color="error" onClick={() => handleDeletar(row.idTarefa)}><DeleteIcon fontSize="small" /></Button>            
@@ -134,8 +150,8 @@ const ListarTarefa = () => {
             </TableContainer>
         </CardContent>
         <CardActions>
-            <Button size="small" variant="contained" onClick={handleOpen}>Criar Tarefa</Button>
-            <Button size="small" variant="outlined">Cancelar</Button>
+            <Button size="small" variant="contained" color="success" onClick={handleOpen}>Criar Tarefa</Button>
+            <Button size="small" variant="outlined" color="secondary">Cancelar</Button>
       </CardActions> 
     </Card>
     <div>
